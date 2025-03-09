@@ -1,0 +1,46 @@
+14:39:54,456 urllib3.connectionpool DEBUG Starting new HTTP connection (1): 127.0.0.1:8000
+14:39:54,536 urllib3.connectionpool DEBUG http://127.0.0.1:8000 "POST /recommendations?user_id=0 HTTP/1.1" 200 80
+14:39:54,537 root INFO Recommendations ID: {'recs': [923941, 770472, 919064, 818090, 901224, 928830, 888735, 890614, 693863, 887422]}
+14:39:54,538 urllib3.connectionpool DEBUG Starting new HTTP connection (1): 127.0.0.1:8000
+14:39:54,605 urllib3.connectionpool DEBUG http://127.0.0.1:8000 "POST /recommendations?user_id=3000000000000 HTTP/1.1" 200 80
+14:39:54,605 root INFO Recommendations ID: {'recs': [923941, 770472, 919064, 818090, 901224, 928830, 888735, 890614, 693863, 887422]}
+14:39:54,606 urllib3.connectionpool DEBUG Starting new HTTP connection (1): 127.0.0.1:8000
+14:39:54,619 urllib3.connectionpool DEBUG http://127.0.0.1:8000 "GET /load_recommendations?rec_type=default&file_path=top_popular.parquet HTTP/1.1" 200 4
+14:39:54,620 root INFO status_code: 200
+14:39:54,621 urllib3.connectionpool DEBUG Starting new HTTP connection (1): 127.0.0.1:8000
+14:39:54,622 urllib3.connectionpool DEBUG http://127.0.0.1:8000 "GET /get_statistics HTTP/1.1" 200 54
+14:39:54,622 root INFO {'request_personal_count': 0, 'request_default_count': 2}
+14:39:54,622 root INFO Testing user: 302
+14:39:54,623 urllib3.connectionpool DEBUG Starting new HTTP connection (1): 127.0.0.1:8000
+14:39:54,624 urllib3.connectionpool DEBUG http://127.0.0.1:8000 "POST /get_statistics?user_id=302&k=10 HTTP/1.1" 405 31
+14:39:54,624 root INFO status code: 405
+14:39:54,625 urllib3.connectionpool DEBUG Starting new HTTP connection (1): 127.0.0.1:8000
+14:39:54,626 urllib3.connectionpool DEBUG http://127.0.0.1:8000 "POST /put_user_event?user_id=302&item_id=1 HTTP/1.1" 200 15
+14:39:54,627 root INFO Put events for testing user
+14:39:54,627 root INFO {'result': 'ok'}
+14:39:54,627 urllib3.connectionpool DEBUG Starting new HTTP connection (1): 127.0.0.1:8000
+14:39:54,628 urllib3.connectionpool DEBUG http://127.0.0.1:8000 "POST /put_user_event?user_id=302&item_id=2 HTTP/1.1" 200 15
+14:39:54,629 root INFO Put events for testing user
+14:39:54,629 root INFO {'result': 'ok'}
+14:39:54,629 urllib3.connectionpool DEBUG Starting new HTTP connection (1): 127.0.0.1:8000
+14:39:54,630 urllib3.connectionpool DEBUG http://127.0.0.1:8000 "POST /put_user_event?user_id=302&item_id=3 HTTP/1.1" 200 15
+14:39:54,631 root INFO Put events for testing user
+14:39:54,631 root INFO {'result': 'ok'}
+14:39:54,631 urllib3.connectionpool DEBUG Starting new HTTP connection (1): 127.0.0.1:8000
+14:39:54,632 urllib3.connectionpool DEBUG http://127.0.0.1:8000 "POST /put_user_event?user_id=302&item_id=4 HTTP/1.1" 200 15
+14:39:54,633 root INFO Put events for testing user
+14:39:54,633 root INFO {'result': 'ok'}
+14:39:54,633 urllib3.connectionpool DEBUG Starting new HTTP connection (1): 127.0.0.1:8000
+14:39:54,634 urllib3.connectionpool DEBUG http://127.0.0.1:8000 "POST /put_user_event?user_id=302&item_id=5 HTTP/1.1" 200 15
+14:39:54,634 root INFO Put events for testing user
+14:39:54,635 root INFO {'result': 'ok'}
+14:39:54,635 urllib3.connectionpool DEBUG Starting new HTTP connection (1): 127.0.0.1:8000
+14:39:54,636 urllib3.connectionpool DEBUG http://127.0.0.1:8000 "POST /get_user_event?user_id=302&k=10 HTTP/1.1" 404 22
+14:39:54,636 root INFO status code: 404
+14:39:54,637 urllib3.connectionpool DEBUG Starting new HTTP connection (1): 127.0.0.1:8000
+14:39:54,638 urllib3.connectionpool DEBUG http://127.0.0.1:8000 "POST /get_online_u2i?user_id=302&k=100&N=10 HTTP/1.1" 422 142
+14:39:54,638 root INFO status code: 422
+14:39:54,639 urllib3.connectionpool DEBUG Starting new HTTP connection (1): 127.0.0.1:8000
+14:39:55,591 urllib3.connectionpool DEBUG http://127.0.0.1:8000 "POST /recommendations?user_id=302 HTTP/1.1" 200 98
+14:39:55,591 root INFO Final recomendations for testing user
+14:39:55,591 root INFO Recommendations ID: {'recs': [8, 923941, 7, 770472, 6, 919064, 5, 818090, 4, 901224, 3, 928830, 2, 888735, 1, 890614, 0, 693863, 887422]}
