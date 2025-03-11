@@ -1,0 +1,6 @@
+personal_als_path: 'personal_als.parquet'
+top_popular_path: 'top_popular.parquet'
+items_path: 'items.parquet'
+als_model_path: 'als_model.pkl'
+N: 10
+k: 10

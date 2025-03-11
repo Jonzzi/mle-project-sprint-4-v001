@@ -2,15 +2,17 @@ from fastapi import FastAPI
 from contextlib import asynccontextmanager
 import logging
 from dotenv import load_dotenv
-
 import pandas as pd
 import pickle
-
+import yaml
 from implicit.als import AlternatingLeastSquares
 
 global logger
 logger = logging.getLogger("uvicorn.error")
 
+global params
+with open('params.yaml', 'r') as fd:
+    params = yaml.safe_load(fd)
 
 # определение классов
 class Recommendations:
@@ -29,13 +31,13 @@ class Recommendations:
         logger.info("Loaded")
         logger.info(self._recs[type].head(1))
 
-    def get(self, user_id, k=10):
+    def get(self, user_id, k=params['k']):
         try:
             recs = self._recs["personal"].loc[user_id]
             recs = recs["item_id"].to_list()[:int(k)]
             self._stats["request_personal_count"] += 1
             logger.info(f"Found {len(recs)} personal recommendations!")
-        except:
+        except (KeyError, IndexError):
             recs = self._recs["default"]
             recs = recs["item_id"].to_list()[:int(k)]
             self._stats["request_default_count"] += 1
@@ -79,12 +81,12 @@ async def lifespan(app: FastAPI):
     # для оффайн-рекомендаций
     rec_store.load(
         type="personal",
-        path="personal_als.parquet"
+        path=params['personal_als_path']
     )
     # для оффайн-рекомендаций
     rec_store.load(
         type="default",
-        path="top_popular.parquet"
+        path=params['top_popular_path']
     )
 
     yield
@@ -123,19 +125,19 @@ rec_store = Recommendations()
 events_store = EventStore()
 
 # подгружаем ранее сохраненные файлы данных и модели
-with open('als_model.pkl', 'rb') as f:
+with open(params['als_model_path'], 'rb') as f:
     als_model = pickle.load(f)
 logger.info('als_model loaded')
 
-items = pd.read_parquet("items.parquet")
+items = pd.read_parquet(params['items_path'])
 logger.info('Items loaded')
 logger.info(items.head(1))
 
 @app.post("/recommendations", name="Получение рекомендаций для пользователя")
-async def recommendations(user_id, k=10):
+async def recommendations(user_id, k=params['k']):
     recs_offline = rec_store.get(user_id, k)
 
-    recs_online = await get_online_u2i(user_id, items, k, N=10)
+    recs_online = await get_online_u2i(user_id, items, k, N=params['N'])
     recs_online = recs_online["recs"]
 
     min_length = min(len(recs_offline), len(recs_online))
@@ -179,7 +181,7 @@ async def recommendations(user_id, k=10):
 
 
 @app.post("/get_online_u2i")
-async def get_online_u2i(user_id, items, k=100, N=10):
+async def get_online_u2i(user_id, items, k=params['k']*10, N=params['N']):
     # получаем список k-последних событий пользователя
     events = await get_user_events(user_id=user_id, k=k)
     events = events["events"]
@@ -228,7 +230,7 @@ async def put_user_event(user_id, item_id):
 
 
 @app.post("/get_user_events")
-async def get_user_events(user_id, k=10):
+async def get_user_events(user_id, k=params['k']):
     events = events_store.get(user_id, k)
 
     return {"events": events}

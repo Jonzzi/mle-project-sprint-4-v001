@@ -78,7 +78,7 @@ for i in [1, 2, 3, 4, 5]:
 
 # запрос на получение событий для тестового пользователя
 params = {"user_id": test_user_id, "k": 10}
-resp = requests.post(url + "/get_user_event", headers=headers, params=params)
+resp = requests.post(url + "/get_user_events", headers=headers, params=params)
 if resp.status_code == 200:
     logging.info(f"Get events for testing user")
     logging.info(resp.json())
